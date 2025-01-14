@@ -113,7 +113,6 @@ impl ServerHandler {
     pub fn handle_add_request(&self, add_request: AddRequest) -> AddResponse {
         // Calculate the sum of a and b from the AddRequest
         let result = add_request.a + add_request.b;
-
         // Create and return the AddResponse
         AddResponse { result }
     }
