@@ -53,6 +53,29 @@ pub struct TestClient {
 
 Ports are represented as **u16** (unsigned 16-bit integers) in networking. This means the valid port range is from 0 to 65535.
 
+### Significant changes of code structure
+
+The handle function processes client requests in a loop:
+
+#### Reading Message:
+
+- It starts by reading a message from the client using read_message.
+- If the message length is invalid (either 0 or too large), it returns an error.
+- The message content is read, and the function tries to decode it using protobuf.
+
+#### Processing Message:
+
+- Depending on the message type (AddRequest or EchoMessage), the server computes the result or echoes the content.
+- If the message is unsupported, it returns an error.
+
+#### Sending Response:
+
+- The response is encoded and sent back to the client with a length prefix.
+
+#### Error Handling:
+
+If any error occurs during reading, processing, or sending a response, the function handles it appropriately, logging disconnections and retrying where necessary.
+
 ## Best Practices Implemented :
 
 ### Error Handling
